@@ -3,5 +3,15 @@
 //  Newsfeed
 //
 
-import Foundation
+import UIKit
+
+class ArticleViewController: UIViewController {
+    
+    var article: Article?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
+}
 

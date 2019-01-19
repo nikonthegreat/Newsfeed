@@ -7,10 +7,9 @@ import UIKit
 
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    private var newsList: NewsList = NewsList()
-    
+    private var viewModel: FeedViewModel!
     private var feedTableView: UITableView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,52 +22,33 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         feedTableView.dataSource = self
         feedTableView.delegate = self
         self.view.addSubview(feedTableView)
-        
-        loadNewsFeed { (result) in
-            self.newsList = result
+        self.view.backgroundColor = UIColor(rgb: 0xf5f5f5)
+
+        self.viewModel = FeedViewModel(articleService: NetworkService())
+        viewModel.onArticlesReady = {
             DispatchQueue.main.async {
-                UIApplication.shared.isNetworkActivityIndicatorVisible = true
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 self.feedTableView.reloadData()
             }
         }
-    }
     
-    func loadNewsFeed(onLoad: @escaping (NewsList) -> Void) {
-        let apiLink = URL(string: "https://newsapi.org/v2/top-headlines")!
-        let query: [String: String] = [
-            "apiKey": "fea974e1e6e14d9aae41a70962fefe59",
-            "country": "us",
-            "pageSize": "10",
-            "page": "1",
-            ]
-        
-        let url = apiLink.withParameters(query)!
-        
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let data = data, let result = try? JSONDecoder().decode(NewsList.self, from: data) {
-                onLoad(result)
-                print("Deserialization", result.status!, result.articles!.count, "articles fetched")
-            }
-            else {
-                print("Deserialization error")
-            }
-        }
-        
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        task.resume()
+        viewModel.getArticles()
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+//        let articleViewController = ArticleViewController()
+//        articleViewController.article = newsList.articles![indexPath.row]
+//        navigationController?.pushViewController(articleViewController, animated: false)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newsList.articles!.count
+        return viewModel.articles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FeedItemCell", for: indexPath as IndexPath) as! FeedItemCell
-        cell.article = newsList.articles![indexPath.row]
+        cell.updateWith(article: viewModel.articles[indexPath.row])
         return cell
     }
     

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DB79B4F621B9A5EA00EB4563 /* NewsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB79B4F521B9A5EA00EB4563 /* NewsList.swift */; };
+		DB79B4F621B9A5EA00EB4563 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB79B4F521B9A5EA00EB4563 /* Article.swift */; };
 		DB9C0B8221B9B22300A6910A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C0B8121B9B22300A6910A /* Extensions.swift */; };
 		DBB24E4321B17D4800397F7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB24E4221B17D4800397F7D /* AppDelegate.swift */; };
 		DBB24E4521B17D4800397F7D /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB24E4421B17D4800397F7D /* FeedViewController.swift */; };
@@ -15,10 +15,14 @@
 		DBB24E4D21B17D4900397F7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBB24E4B21B17D4900397F7D /* LaunchScreen.storyboard */; };
 		DBBFBE6D21B7225E0036FB52 /* FeedItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBFBE6C21B7225E0036FB52 /* FeedItemCell.swift */; };
 		DBEC194621F112C300B7CAE8 /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEC194521F112C300B7CAE8 /* ArticleViewController.swift */; };
+		DBEC194B21F3521D00B7CAE8 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEC194A21F3521D00B7CAE8 /* NetworkService.swift */; };
+		DBEC194D21F352EE00B7CAE8 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEC194C21F352EE00B7CAE8 /* NetworkClient.swift */; };
+		DBEC194F21F3612100B7CAE8 /* ApiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEC194E21F3612100B7CAE8 /* ApiConstants.swift */; };
+		DBEC195221F3690500B7CAE8 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEC195121F3690500B7CAE8 /* FeedViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		DB79B4F521B9A5EA00EB4563 /* NewsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsList.swift; sourceTree = "<group>"; };
+		DB79B4F521B9A5EA00EB4563 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		DB9C0B8121B9B22300A6910A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DBB24E3F21B17D4800397F7D /* Newsfeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Newsfeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBB24E4221B17D4800397F7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -28,6 +32,10 @@
 		DBB24E4E21B17D4900397F7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBBFBE6C21B7225E0036FB52 /* FeedItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemCell.swift; sourceTree = "<group>"; };
 		DBEC194521F112C300B7CAE8 /* ArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
+		DBEC194A21F3521D00B7CAE8 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		DBEC194C21F352EE00B7CAE8 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		DBEC194E21F3612100B7CAE8 /* ApiConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiConstants.swift; sourceTree = "<group>"; };
+		DBEC195121F3690500B7CAE8 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +68,8 @@
 		DBB24E4121B17D4800397F7D /* Newsfeed */ = {
 			isa = PBXGroup;
 			children = (
+				DBEC195021F368F700B7CAE8 /* ViewModel */,
+				DBEC194921F3515200B7CAE8 /* Networking */,
 				DBEC194421F1115000B7CAE8 /* Controller */,
 				DBEC194321F1114400B7CAE8 /* View */,
 				DBEC194221F1110000B7CAE8 /* Extension */,
@@ -74,7 +84,7 @@
 		DBEC194121F110D400B7CAE8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DB79B4F521B9A5EA00EB4563 /* NewsList.swift */,
+				DB79B4F521B9A5EA00EB4563 /* Article.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -103,6 +113,24 @@
 				DBEC194521F112C300B7CAE8 /* ArticleViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		DBEC194921F3515200B7CAE8 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				DBEC194A21F3521D00B7CAE8 /* NetworkService.swift */,
+				DBEC194C21F352EE00B7CAE8 /* NetworkClient.swift */,
+				DBEC194E21F3612100B7CAE8 /* ApiConstants.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		DBEC195021F368F700B7CAE8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DBEC195121F3690500B7CAE8 /* FeedViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,12 +203,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBEC195221F3690500B7CAE8 /* FeedViewModel.swift in Sources */,
+				DBEC194F21F3612100B7CAE8 /* ApiConstants.swift in Sources */,
 				DB9C0B8221B9B22300A6910A /* Extensions.swift in Sources */,
 				DBEC194621F112C300B7CAE8 /* ArticleViewController.swift in Sources */,
 				DBBFBE6D21B7225E0036FB52 /* FeedItemCell.swift in Sources */,
 				DBB24E4521B17D4800397F7D /* FeedViewController.swift in Sources */,
-				DB79B4F621B9A5EA00EB4563 /* NewsList.swift in Sources */,
+				DB79B4F621B9A5EA00EB4563 /* Article.swift in Sources */,
 				DBB24E4321B17D4800397F7D /* AppDelegate.swift in Sources */,
+				DBEC194B21F3521D00B7CAE8 /* NetworkService.swift in Sources */,
+				DBEC194D21F352EE00B7CAE8 /* NetworkClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

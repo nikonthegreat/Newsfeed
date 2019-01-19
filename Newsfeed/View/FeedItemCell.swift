@@ -7,36 +7,6 @@ import UIKit
 
 class FeedItemCell: UITableViewCell {
     
-    var article: NewsList.Article? {
-        didSet {
-            guard let article = article else {return}
-            
-            if let title = article.title {
-                titleLabel.text = title
-            }
-            
-            if let url = article.urlToImage {
-                newsImageView.image = nil
-                newsImageView.alpha = 0.0
-                newsImageView.loadFromUrl(url)
-            }
-            
-            if let description = article.description {
-                descriptionLabel.text = description
-            }
-            
-            if let source = article.source.name {
-                sourceLabel.text = source
-            }
-            
-            if let date = article.publishedAt {
-                let formatter = DateFormatter()
-                formatter.dateFormat = "dd MMM HH:mm"
-                publishedAtLabel.text = formatter.string(from: date)
-            }
-        }
-    }
-    
     let sourceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -74,6 +44,21 @@ class FeedItemCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
+    
+    func updateWith(article: Article?) {
+        guard let article = article else {return}
+        
+        titleLabel.text =  article.title
+        descriptionLabel.text = article.description
+        sourceLabel.text = article.source.name
+        publishedAtLabel.text = article.getDateString("dd MMM HH:mm")
+        
+        if let url = article.urlToImage {
+            newsImageView.image = nil
+            newsImageView.alpha = 0.0
+            newsImageView.loadFromUrl(url)
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
