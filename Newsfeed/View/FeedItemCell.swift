@@ -70,16 +70,16 @@ class FeedItemCell: UITableViewCell {
         verticalLayout.addArrangedSubview(titleLabel)
         verticalLayout.addArrangedSubview(descriptionLabel)
 
-        self.contentView.addSubview(verticalLayout)
-        self.contentView.backgroundColor = UIColor(rgb: 0xf5f5f5)
+        contentView.addSubview(verticalLayout)
+        contentView.backgroundColor = UIColor(rgb: 0xf5f5f5)
         
         verticalLayout.translatesAutoresizingMaskIntoConstraints = false
         verticalLayout.axis = .vertical
         verticalLayout.spacing = 6
-        verticalLayout.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant:20).isActive = true
-        verticalLayout.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant:20).isActive = true
-        verticalLayout.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant:-20).isActive = true
-        verticalLayout.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant:-20).isActive = true
+        verticalLayout.topAnchor.constraint(equalTo: contentView.topAnchor, constant:20).isActive = true
+        verticalLayout.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant:20).isActive = true
+        verticalLayout.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant:-20).isActive = true
+        verticalLayout.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant:-20).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -20,7 +20,7 @@ protocol ArticleService {
 
 extension NetworkService : ArticleService {
     func getArticles(result: @escaping ArticleLoadCompletion) {
-        client.load(path: ApiConstants.getArticles(), parameters: ApiConstants.getHeadlinesParameters()) { (data, error) in
+        client.load(path: ApiConstants.ArticleURL, parameters: ApiConstants.ArticleURLParameters) { (data, error) in
             guard let data = data else {
                 result(nil, error)
                 return

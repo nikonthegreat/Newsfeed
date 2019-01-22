@@ -20,14 +20,14 @@ class FeedViewModel {
     }
     
     func getArticles() {
-        articleService.getArticles { articles, error in
+        articleService.getArticles { [weak self] articles, error in
             guard let articles = articles else {
-                self.onArticlesError?(error)
+                self?.onArticlesError?(error)
                 return
             }
             
-            self.articles = articles
-            self.onArticlesReady?()
+            self?.articles = articles
+            self?.onArticlesReady?()
         }
     }
 }
