@@ -9,9 +9,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private var viewModel: FeedViewModel!
     private var feedTableView: UITableView!
+    private var page: Int! = 1
+    private var pageSize: Int! = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Newsfeed"
         
         let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = view.frame.width
@@ -26,30 +29,42 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         view.backgroundColor = UIColor(rgb: 0xf5f5f5)
 
         viewModel = FeedViewModel(articleService: NetworkService())
+        
         viewModel.onArticlesReady = { [weak self] in
             DispatchQueue.main.async {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 self?.feedTableView.reloadData()
+                self?.title = "Newsfeed (\(self?.viewModel.availablePages ?? 0) articles)"
             }
         }
+        
+        viewModel.initArticles(from: page, count: pageSize)
+    }
     
+    func fetchMoreArticles() {
+        page += 1
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        viewModel.getArticles()
+        viewModel.getArticles(from: page, count: pageSize)
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let articleViewController = ArticleViewController()
-//        articleViewController.article = newsList.articles![indexPath.row]
-//        navigationController?.pushViewController(articleViewController, animated: false)
+        let articleViewController = ArticleViewController()
+        articleViewController.article = viewModel.articles[indexPath.row]
+        navigationController?.pushViewController(articleViewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.articles.count
+        return viewModel.availablePages
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FeedItemCell", for: indexPath as IndexPath) as! FeedItemCell
-        cell.updateWith(article: viewModel.articles[indexPath.row])
+        if indexPath.row < viewModel.articles.count {
+            cell.updateWith(article: viewModel.articles[indexPath.row])
+        }
+        else {
+            cell.clear()
+        }
         return cell
     }
     
@@ -58,16 +73,20 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        print("prefetchRowsAt \(indexPaths)")
+        var maxIndexRow = 0
+        indexPaths.forEach {
+            if maxIndexRow < $0.row {
+                maxIndexRow = $0.row
+            }
+        }
         
-        let needsFetch = indexPaths.contains { $0.row >= self.viewModel.articles.count }
-        if needsFetch {
-            print("fetch more")
+        if maxIndexRow > viewModel.articles.count {
+            fetchMoreArticles()
         }
     }
     
-    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        print("cancelPrefetchingForRowsAt \(indexPaths)")
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths : [IndexPath]) {
     }
+    
 }
 

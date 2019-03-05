@@ -46,6 +46,7 @@ class FeedItemCell: UITableViewCell {
     }()
     
     func updateWith(article: Article?) {
+        clear()
         guard let article = article else {return}
         
         titleLabel.text =  article.title
@@ -58,6 +59,15 @@ class FeedItemCell: UITableViewCell {
             newsImageView.alpha = 0.0
             newsImageView.loadFromUrl(url)
         }
+    }
+    
+    func clear() {
+        titleLabel.text = nil
+        descriptionLabel.text = nil
+        sourceLabel.text = nil
+        publishedAtLabel.text = nil
+        newsImageView.image = nil
+        newsImageView.alpha = 0.0
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

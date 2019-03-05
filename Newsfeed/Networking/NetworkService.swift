@@ -14,15 +14,20 @@ class NetworkService {
 }
 
 protocol ArticleService {
-    typealias ArticleLoadCompletion = ([Article]?, Error?) -> Void
-    func getArticles(result: @escaping ArticleLoadCompletion)
+    typealias ArticleLoadCompletion = ([Article]?, Int?, Error?) -> Void
+    func getArticles(from page: Int, count pageSize: Int, result: @escaping ArticleLoadCompletion)
 }
 
 extension NetworkService : ArticleService {
-    func getArticles(result: @escaping ArticleLoadCompletion) {
-        client.load(path: ApiConstants.ArticleURL, parameters: ApiConstants.ArticleURLParameters) { (data, error) in
+    func getArticles(from page: Int, count pageSize: Int, result: @escaping ArticleLoadCompletion) {
+        
+        var params = ApiConstants.ArticleURLParameters
+        params["pageSize"] = String(pageSize)
+        params["page"] = String(page)
+        
+        client.load(path: ApiConstants.ArticleURL, parameters: params) { (data, error) in
             guard let data = data else {
-                result(nil, error)
+                result(nil, 0, error)
                 return
             }
             
@@ -30,10 +35,14 @@ extension NetworkService : ArticleService {
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .iso8601
                 let res = try decoder.decode(ArticlesResponse.self, from: data)
-                result(res.articles, nil)
+                result(res.articles, res.totalResults, nil)
             }
             catch {
-                result(nil, error)
+                if let errorStr = String(data: data, encoding: .utf8) {
+                    print(errorStr)
+                }
+
+                result(nil, 0, error)
             }
         }
     }

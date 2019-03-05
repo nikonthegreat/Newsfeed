@@ -11,7 +11,7 @@ class ArticleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        title = article?.source.name
     }
 }
 

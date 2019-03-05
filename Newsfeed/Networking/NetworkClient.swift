@@ -15,7 +15,7 @@ class NetworkClient {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let response = response as? HTTPURLResponse {
                 if response.statusCode != 200 {
-                    completion(nil, error)
+                    completion(data, error)
                 }
                 else {
                     completion(data, error)
