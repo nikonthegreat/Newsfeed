@@ -12,10 +12,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigationController: UINavigationController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {        
-        let temporaryDirectory = NSTemporaryDirectory()
-        let urlCache = URLCache(memoryCapacity: 25000000,
-                                diskCapacity: 50000000, diskPath: temporaryDirectory)
-        URLCache.shared = urlCache
+//        let temporaryDirectory = NSTemporaryDirectory()
+//        let urlCache = URLCache(memoryCapacity: 25000000,
+//                                diskCapacity: 50000000, diskPath: temporaryDirectory)
+//        URLCache.shared = urlCache
         
         window = UIWindow()
         if let window = window {

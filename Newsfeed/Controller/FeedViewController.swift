@@ -49,7 +49,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let articleViewController = ArticleViewController()
-        articleViewController.article = viewModel.articles[indexPath.row]
+        articleViewController.updateWith(article: viewModel.articles[indexPath.row])
         navigationController?.pushViewController(articleViewController, animated: true)
     }
     
